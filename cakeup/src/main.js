@@ -106,7 +106,7 @@ function updateHud() {
     <div style="font-size: 42px; font-weight: bold">
       ${score} ชั้น
     </div>
-    <div style="margin-top: 8px">${message}</div>
+    <div>${message}</div>
   `
 }
 
@@ -142,7 +142,7 @@ function dropCake() {
 
   if (distance >= supportRadius) {
     state = 'falling'
-    message = 'พลาดแล้ว! รอดูผลอีกนิด'
+    message = 'try again'
     updateHud()
     return
   }
@@ -150,7 +150,7 @@ function dropCake() {
   // วางใกล้จุดศูนย์กลางพอ จะจัดให้ตรงพอดี
   if (distance <= radius * 0.12) {
     movingCake.position.x = topCake.position.x
-    message = 'Perfect! 🎯 ขนาดเท่าเดิม'
+    message = 'Perfect!'
   } else {
     // ขนาดนี้ใช้กับชั้นถัดไป
     const nextRadius = Math.max(0.18, radius - distance * 0.3)
@@ -159,7 +159,7 @@ function dropCake() {
     )
 
     radius = nextRadius
-    message = `ชั้นถัดไปเล็กลง ${shrinkPercent}%`
+    message = `🍰🍰🍰🍰🍰🍰`
   }
 
   state = 'dropping'
@@ -269,11 +269,16 @@ renderer.setAnimationLoop((time) => {
   const smoothing = 1 - Math.exp(-5 * delta) //ทำให้กล้องเคลื่อนนุ่มนวลใกล้เคียงกัน แม้แต่ละเครื่องมีอัตราเฟรมต่างกัน ที่ประมาณ 60 เฟรมต่อวินาที จะได้ smoothing ≈ 0.08
   cameraY += (targetY - cameraY) * smoothing //ความสูงใหม่ = ความสูงเดิม + ระยะที่ยังห่างจากเป้าหมาย × สัดส่วนที่ขยับ
  
+// จอแคบให้กล้องถอยออก จอกว้างใช้ระยะเดิม
+  const aspect = camera.aspect
+  const distanceScale = Math.max(1, 1.2 / aspect)
+
   camera.position.set(
-    topCake.position.x + 5,
-    cameraY + 3.5,
-    7
+    topCake.position.x + 5 * distanceScale,
+    cameraY + 3.5 * distanceScale,
+    7 * distanceScale
   )
+
   camera.lookAt(topCake.position.x, cameraY, 0)
 
   renderer.render(scene, camera)
