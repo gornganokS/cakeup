@@ -79,7 +79,7 @@ hud.style.cssText = `
   left: 0;
   width: 100%;
   text-align: center;
-  font-family: sans-serif;
+  font-family: 'Mali', cursive;
   color: #754355;
   pointer-events: none;
 `
@@ -103,7 +103,7 @@ let placedCakes = []
 
 function updateHud() {
   hud.innerHTML = `
-    <div style="font-size: 42px; font-weight: bold">
+    <div style="font-size: 35px; font-weight: bold">
       ${score} ชั้น
     </div>
     <div>${message}</div>
@@ -271,7 +271,7 @@ renderer.setAnimationLoop((time) => {
  
 // จอแคบให้กล้องถอยออก จอกว้างใช้ระยะเดิม
   const aspect = camera.aspect
-  const distanceScale = Math.max(1, 1.2 / aspect)
+  const distanceScale = Math.max(1, 1.09 / aspect)
 
   camera.position.set(
     topCake.position.x + 5 * distanceScale,

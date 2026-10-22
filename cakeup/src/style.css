@@ -18,3 +18,8 @@ body {
 canvas {
   display: block;
 }
+
+body,
+button {
+  font-family: 'Mali', cursive;
+}
